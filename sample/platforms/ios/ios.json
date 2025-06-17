@@ -1,0 +1,39 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {
+      "config.xml": {
+        "parents": {
+          "/*": [
+            {
+              "xml": "<feature name=\"DevRevPlugin\"><param name=\"ios-package\" value=\"DevRevSDKCordovaPlugin\" /></feature>",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
+  },
+  "installed_plugins": {
+    "devrev-cordova-plugin": {
+      "PACKAGE_NAME": "ai.devrev.sdk.bridge.cordova.DevRevSDKSample"
+    }
+  },
+  "dependent_plugins": {},
+  "modules": [
+    {
+      "id": "devrev-cordova-plugin.DevRevPlugin",
+      "file": "plugins/devrev-cordova-plugin/www/DevRevPlugin.js",
+      "pluginId": "devrev-cordova-plugin",
+      "clobbers": [
+        "DevRev"
+      ]
+    }
+  ],
+  "plugin_metadata": {
+    "devrev-cordova-plugin": "1.0.0"
+  }
+}

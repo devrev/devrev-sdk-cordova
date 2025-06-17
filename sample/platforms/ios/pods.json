@@ -1,0 +1,11 @@
+{
+    "declarations": {},
+    "sources": {},
+    "libraries": {
+        "DevRevSDK": {
+            "name": "DevRevSDK",
+            "spec": "~> 2.0.2",
+            "count": 1
+        }
+    }
+}

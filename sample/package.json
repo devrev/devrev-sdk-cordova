@@ -1,0 +1,29 @@
+{
+  "name": "ai.devrev.sdk.bridge.cordova.DevRevSDKSample",
+  "displayName": "DevRevSDKSample",
+  "version": "1.0.0",
+  "description": "Sample app for the DevRev SDK for Cordova.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": {
+    "name": "DevRev",
+    "email": "support@devrev.ai",
+    "url": "https://devrev.ai"
+  },
+  "license": "Apache-2.0",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-device": {},
+      "devrev-cordova-plugin": {}
+    },
+    "platforms": []
+  },
+  "devDependencies": {
+    "@devrev/sdk-cordova": "^2.0.0"
+  }
+}
