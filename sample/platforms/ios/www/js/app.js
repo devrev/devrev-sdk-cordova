@@ -1,21 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     const backButton = document.getElementById("backButton");
-        if (backButton) {
-            backButton.addEventListener("click", function () {
-                window.history.back();
-            });
-        }
-
-    const refreshButton = document.getElementById("refreshButton");
-        if (refreshButton) {
-            refreshButton.addEventListener("click", function () {
-                renderStatusList();
-                renderFeatureList();
-            });
-        }
-
-    renderStatusList();
-    renderFeatureList();
+    if (backButton) {
+        backButton.addEventListener("click", function () {
+            window.history.back();
+        });
+    }
 });
 
 // Cordova Device Ready Event

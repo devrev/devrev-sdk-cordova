@@ -14,11 +14,11 @@ const featureData = {
             title: "Debug",
             list: [
                 {
-                    text: "Force a crash",
+                    text: "Simulate crash",
                     action: () =>  DevRev.crash()
                 },
                 {
-                    text: "Trigger ANR",
+                    text: "Simulate ANR",
                     action: () => {
                         if (cordova.platformId === 'android') {
                             const startTime = Date.now();
@@ -29,10 +29,121 @@ const featureData = {
                     condition: () => cordova.platformId === 'android'
                 }
             ]
+        },
+        {
+            title: "Animation",
+            list: [
+                {
+                    text: "Animation",
+                    action: () => {
+                        const elements = document.querySelectorAll('a');
+                        const animationElement = Array.from(elements).find(el => el.textContent === 'Animation');
+                        if (animationElement) {
+                            animationElement.style.transition = 'all 2s';
+                            animationElement.style.transform = 'scale(1.5)';
+
+                            setTimeout(() => {
+                                animationElement.style.transform = 'scale(1)';
+                            }, 2000);
+                        }
+                    },
+                    condition: () => cordova.platformId === 'android'
+                }
+            ],
+            condition: () => cordova.platformId === 'android'
         }
     ],
     "identification.html": [
-        { title: "Logout",
+        {
+            title: "Unverified User",
+            list: [
+                {
+                    text: "Identify User",
+                    type: "input-group",
+                    inputs: [
+                        {
+                            id: "unverifiedUserId",
+                            type: "text",
+                            placeholder: "User ID"
+                        }
+                    ],
+                    action: () => {
+                        const userId = document.getElementById('unverifiedUserId').value;
+                        if (userId) {
+                            var identity = {
+                                userID: userId
+                            };
+                            currentUserId = userId;
+                            DevRev.identifyUnverifiedUser(identity);
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            title: "Verified User",
+            list: [
+                {
+                    text: "Verify User",
+                    type: "input-group",
+                    inputs: [
+                        {
+                            id: "verifiedUserId",
+                            type: "text",
+                            placeholder: "User ID"
+                        },
+                        {
+                            id: "sessionToken",
+                            type: "text",
+                            placeholder: "Session Token"
+                        }
+                    ],
+                    action: () => {
+                        const userId = document.getElementById('verifiedUserId').value;
+                        const sessionToken = document.getElementById('sessionToken').value;
+                        if (userId && sessionToken) {
+                            currentUserId = userId;
+                            DevRev.verifyUser(userId, sessionToken);
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            title: "Update User",
+            list: [
+                {
+                    text: "Update User",
+                    type: "input-group",
+                    inputs: [
+                        {
+                            id: "email",
+                            type: "email",
+                            placeholder: "New Email"
+                        }
+                    ],
+                    action: () => {
+                        if (!currentUserId) {
+                            alert('Please identify or verify a user first');
+                            return;
+                        }
+
+                        const email = document.getElementById('email').value;
+
+                        const identity = {
+                            userID: currentUserId,
+                            userTraits: {
+                                email: email
+                            }
+                        };
+
+                        DevRev.updateUser(identity);
+                    }
+                }
+            ]
+        },
+        {
+            title: "Logout",
             list: [
                 { text: "Logout", action: () => logout() }
             ]
@@ -102,7 +213,7 @@ const featureData = {
             ]
         },
         {
-            title: "Timer with Properties",
+            title: "Timer",
             list: [
                 { text: "Start Timer", action: () => {
                     let properties = {"id": "foo-bar-123"};
@@ -121,23 +232,52 @@ const featureData = {
             ]
         },
         {
+            title: "Manual Masking / Unmasking",
+            list: [
+                {
+                    text: "Manually Masked UI Item",
+                    type: "label",
+                    className: "devrev-mask"
+                },
+                {
+                    text: "Manually Unmasked UI Item",
+                    type: "input",
+                    className: "devrev-unmask",
+                    placeholder: "Manually Unmasked UI Item"
+                }
+            ]
+        },
+        {
             title: "On-Demand Session",
             list: [
-                { text: "Process On-Demand Session", action: () => {
-                    DevRev.processAllOnDemandSessions(
-                        () => alert("On-demand sessions processed successfully"),
-                        (error) => alert("Failed to process on-demand sessions: " + error)
-                    );
-                }}
+                {
+                    text: "Process On-Demand Session",
+                    action: () => {
+                        DevRev.processAllOnDemandSessions(
+                            () => alert("On-demand sessions processed successfully"),
+                            (error) => alert("Failed to process on-demand sessions: " + error)
+                        );
+                    }
+                }
             ]
         },
         {
             title: "Delayed Screen",
             list: [
-                { text: "Go To Delayed Screen", link: "delayedScreen.html" },
+                {
+                    text: "Navigate to the Delayed Screen",
+                    action: () => {
+                        if (cordova.platformId === 'android') {
+                            DevRev.setInScreenTransitioning(true);
+                            setTimeout(function() {
+                                window.location.href = 'delayedScreen.html';
+                            }, 2000);
+                        }
+                    }
+                }
             ],
             condition: () => cordova.platformId === 'android'
-        }
+        },
     ]
 };
 
@@ -216,80 +356,98 @@ function renderFeatureList() {
         }
 
         if (section.list) {
+            const ul = document.createElement("ul");
+            ul.className = section.title === "Manual Masking / Unmasking" ? "input-group" : "feature-list";
+
             section.list.forEach(item => {
                 // Skip items that don't meet their condition
                 if (item.condition && !item.condition()) {
                     return;
                 }
 
-                const li = document.createElement("li");
-                li.style.cursor = "pointer";
+                if (item.type === "input-group") {
+                    // Create input group container
+                    const inputGroup = document.createElement("div");
+                    inputGroup.className = "input-group";
 
-                if (item.link) {
-                    li.addEventListener("click", () => {
-                        window.location.href = item.link;
+                    // Add inputs
+                    item.inputs.forEach(input => {
+                        const inputElement = document.createElement("input");
+                        inputElement.type = input.type;
+                        inputElement.id = input.id;
+                        inputElement.placeholder = input.placeholder;
+                        inputGroup.appendChild(inputElement);
                     });
-                } else if (item.action) {
-                    li.addEventListener("click", (e) => {
-                        e.preventDefault();
-                        item.action();
-                        console.log(`"${item.text}" executed successfully.`);
-                    });
+
+                    list.appendChild(inputGroup);
+
+                    // Create button list item
+                    const li = document.createElement("li");
+                    li.style.cursor = "pointer";
+
+                    if (item.action) {
+                        li.addEventListener("click", (e) => {
+                            e.preventDefault();
+                            item.action();
+                            console.log(`"${item.text}" executed successfully.`);
+                        });
+                    }
+
+                    const a = document.createElement("a");
+                    a.textContent = item.text;
+                    a.href = "#";
+                    a.style.pointerEvents = "none";
+                    a.style.textDecoration = "none";
+                    a.style.color = "inherit";
+
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                } else if (item.type === "input") {
+                    const li = document.createElement("li");
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.placeholder = item.placeholder;
+                    input.className = item.className;
+                    li.appendChild(input);
+                    ul.appendChild(li);
+                } else if (item.type === "label") {
+                    const li = document.createElement("li");
+                    const label = document.createElement("label");
+                    label.textContent = item.text;
+                    label.className = item.className;
+                    li.appendChild(label);
+                    ul.appendChild(li);
+                } else {
+                    const li = document.createElement("li");
+                    li.style.cursor = "pointer";
+
+                    if (item.link) {
+                        li.addEventListener("click", () => {
+                            window.location.href = item.link;
+                        });
+                    } else if (item.action) {
+                        li.addEventListener("click", (e) => {
+                            e.preventDefault();
+                            item.action();
+                            console.log(`"${item.text}" executed successfully.`);
+                        });
+                    }
+
+                    const a = document.createElement("a");
+                    a.textContent = item.text;
+                    a.href = item.link || "#";
+                    a.style.pointerEvents = "none";
+                    a.style.textDecoration = "none";
+                    a.style.color = "inherit";
+
+                    li.appendChild(a);
+                    ul.appendChild(li);
                 }
-
-                const a = document.createElement("a");
-                a.textContent = item.text;
-                a.href = item.link || "#";
-                a.style.pointerEvents = "none";
-                a.style.textDecoration = "none";
-                a.style.color = "inherit";
-
-                li.appendChild(a);
-                list.appendChild(li);
             });
+            list.appendChild(ul);
         }
     });
 }
-
-document.getElementById('identifyUser').addEventListener('click', function(e) {
-    e.preventDefault();
-    const userId = document.getElementById('unverifiedUserId').value;
-    if (userId) {
-        currentUserId = userId;
-        DevRev.identifyUser(userId);
-    }
-});
-
-document.getElementById('verifyUser').addEventListener('click', function(e) {
-    e.preventDefault();
-    const userId = document.getElementById('verifiedUserId').value;
-    const sessionToken = document.getElementById('sessionToken').value;
-    if (userId && sessionToken) {
-        currentUserId = userId;
-        DevRev.verifyUser(userId, sessionToken);
-    }
-});
-
-document.getElementById('updateUser').addEventListener('click', function(e) {
-    e.preventDefault();
-    if (!currentUserId) {
-        alert('Please identify or verify a user first');
-        return;
-    }
-
-    const displayName = document.getElementById('displayName').value;
-    const email = document.getElementById('email').value;
-
-    const identity = {
-        userID: currentUserId,
-        userTraits: {
-            displayName: displayName,
-            email: email
-        }
-    };
-
-    DevRev.updateUser(identity);
-});
 
 document.addEventListener("DOMContentLoaded", function() {
     renderFeatureList();

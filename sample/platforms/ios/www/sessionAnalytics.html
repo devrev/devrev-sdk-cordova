@@ -9,73 +9,15 @@
 <body>
     <div class="header">
         <button id="backButton" class="back-button">&larr;</button>
-        <h1>Analytics</h1>
-        <button id="refreshButton" class="refresh-button">↻</button>
-    </div>
-    <div class="section">
-        <h2>Status</h2>
-        <ul id="statusList" class="status-list"></ul>
+        <h1>Session Analytics</h1>
     </div>
 
     <div class="section">
         <ul id="featureList" class="feature-list"></ul>
     </div>
 
-    <div class="section">
-        <h3>Manual Masking/Unmasking</h3>
-        <ul class="input-group">
-            <li><label class="devrev-mask">Manually masked item</label></li>
-            <li><input type="text" placeholder="Manually unmasked item" class="devrev-unmask"></li>
-        </ul>
-    </div>
-
-    <div class="section" id="delayedScreenSection" style="display: none;">
-        <h3>Delayed Screen</h3>
-        <ul class="feature-list">
-            <a href="#"><li id="openDelayedScreen">Open Delayed Screen</li></a>
-        </ul>
-    </div>
-
     <script src="cordova.js"></script>
-    <script src="js/status.js"></script>
     <script src="js/feature.js"></script>
     <script src="js/app.js"></script>
-    <script>
-        document.addEventListener('deviceready', onDeviceReady, false);
-
-        function onDeviceReady() {
-            // Check if running on Android
-            if (device.platform === 'Android') {
-                document.getElementById('delayedScreenSection').style.display = 'block';
-            }
-
-            // Add click handler for delayed screen
-            document.getElementById('openDelayedScreen').addEventListener('click', function(e) {
-                e.preventDefault();
-                openDelayedScreen();
-            });
-        }
-
-        function openDelayedScreen() {
-            // Create a new window
-            var ref = cordova.InAppBrowser.open('about:blank', '_blank', 'location=no');
-
-            // Wait for the window to load
-            ref.addEventListener('loadstop', function() {
-                // Inject HTML content after 2 seconds
-                setTimeout(function() {
-                    ref.executeScript({
-                        code: `
-                            document.body.innerHTML = '<div style="padding: 20px; text-align: center;">' +
-                                '<h2>Delayed Screen</h2>' +
-                                '<p>This screen opened after a 2-second delay</p>' +
-                                '<button onclick="window.close()" style="padding: 10px 20px; margin-top: 20px;">Close</button>' +
-                            '</div>';
-                        `
-                    });
-                }, 2000);
-            });
-        }
-    </script>
 </body>
 </html>

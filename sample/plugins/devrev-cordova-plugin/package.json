@@ -1,0 +1,45 @@
+{
+  "name": "@devrev/sdk-cordova",
+  "version": "2.1.0-1751023864",
+  "description": "DevRev SDK, used for integrating DevRev services into your Cordova app.",
+  "main": "www/DevRevPlugin.js",
+  "keywords": [
+    "devrev",
+    "devrev-sdk",
+    "devrev-sdk-cordova",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "author": {
+    "name": "DevRev",
+    "email": "support@devrev.ai",
+    "url": "https://devrev.ai"
+  },
+  "license": "Apache-2.0",
+  "homepage": "https://www.devrev.ai",
+  "cordova": {
+    "id": "devrev-sdk-cordova",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "engines": {
+    "cordova": ">=12.0.0",
+    "cordova-android": ">=10.1.1",
+    "cordova-ios": ">=6.0.0"
+  },
+  "files": [
+    "src",
+    "www",
+    "android",
+    "ios",
+    "!samples",
+    "*.xml"
+  ]
+}

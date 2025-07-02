@@ -438,6 +438,26 @@ var DevRevPlugin = {
 
     crash: function(successCallback, errorCallback) {
         exec(successCallback, errorCallback, "DevRevPlugin", "crash", []);
+    },
+
+    /**
+     * Sets the screen transition state.
+     *
+     * This method should be called to indicate whether the app is currently in a screen transition.
+     * It helps track UI navigation events and ensures that relevant actions are delayed until the transition is complete.
+     *
+     * @remarks
+     * - It is the developer's responsibility to call this method at the appropriate time in the navigation flow.
+     * - Set to true when starting a transition, and false when the transition is complete.
+     *
+     * @param isTransitioning - Boolean indicating whether the app is in a screen transition.
+     * @param successCallback - A callback function to be called on success.
+     * @param errorCallback - A callback function to be called on error.
+     *
+     * @category Screen Transition
+     */
+    setInScreenTransitioning: function(isTransitioning, successCallback, errorCallback) {
+        exec(successCallback, errorCallback, "DevRevPlugin", "setInScreenTransitioning", [isTransitioning]);
     }
 };
 

@@ -9,24 +9,29 @@ body {
 /* Header */
 .header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-bottom: 10px;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd;
+    margin: -20px -20px 20px -20px;
 }
 
-h1 {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
-/* Buttons */
-#refreshButton, #backButton {
+#backButton {
     background: none;
     border: none;
     font-size: 24px;
     cursor: pointer;
-    padding: 5px;
-    margin: 10px;
+    padding: 10px;
+    color: #333;
+    position: absolute;
+    left: 20px;
+}
+
+.header h1 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
 }
 
 /* Sections */

@@ -47,7 +47,7 @@ DevRev SDK, used for integrating DevRev services into your Cordova app.
 To install the DevRev SDK, run the following command:
 
 ```sh
-cordova plugin add @devrev/sdk-cordova
+cordova plugin add devrev-cordova-plugin
 ```
 
 ### Set up the DevRev SDK

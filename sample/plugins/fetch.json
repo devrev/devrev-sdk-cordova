@@ -1,8 +1,8 @@
 {
   "devrev-cordova-plugin": {
     "source": {
-      "type": "local",
-      "path": "/Users/dhananjay/Desktop/workspace/cordova-sdk-source/samples/node_modules/@devrev/sdk-cordova"
+      "type": "registry",
+      "id": "@devrev/sdk-cordova"
     },
     "is_top_level": true,
     "variables": {}

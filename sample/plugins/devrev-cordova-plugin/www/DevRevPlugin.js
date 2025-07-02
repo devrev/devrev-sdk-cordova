@@ -1,4 +1,3 @@
-cordova.define("devrev-cordova-plugin.DevRevPlugin", function(require, exports, module) {
 var exec = require('cordova/exec');
 
 var DevRevPlugin = {
@@ -462,5 +461,3 @@ var DevRevPlugin = {
 };
 
 module.exports = DevRevPlugin;
-
-});
