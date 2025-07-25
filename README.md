@@ -5,6 +5,7 @@ DevRev SDK, used for integrating DevRev services into your Cordova app.
 - [DevRev SDK for Cordova](#devrev-sdk-for-cordova)
   - [Table of contents](#table-of-contents)
   - [Quickstart guide](#quickstart-guide)
+    - [Requirements](#requirements)
     - [Installation](#installation)
     - [Set up the DevRev SDK](#set-up-the-devrev-sdk)
   - [Features](#features)
@@ -12,6 +13,9 @@ DevRev SDK, used for integrating DevRev services into your Cordova app.
       - [Anonymous identification](#anonymous-identification)
       - [Unverified identification](#unverified-identification)
       - [Verified identification](#verified-identification)
+        - [Generate an AAT](#generate-an-aat)
+        - [Exchange your AAT for a session token](#exchange-your-aat-for-a-session-token)
+        - [Identifying the verified user](#identifying-the-verified-user)
       - [Updating the user](#updating-the-user)
       - [Logout](#logout)
     - [PLuG support chat](#plug-support-chat)
@@ -43,6 +47,11 @@ DevRev SDK, used for integrating DevRev services into your Cordova app.
   - [Migration guide](#migration-guide)
 
 ## Quickstart guide
+### Requirements
+- Cordova 12.0 or later.
+- On Android, the minimum API level should be 24.
+- On iOS, the minimum deployment target should be 15.0.
+
 ### Installation
 To install the DevRev SDK, run the following command:
 
@@ -90,10 +99,53 @@ DevRev.identifyUnverifiedUser(identity, successCallback, errorCallback)
 ```
 
 #### Verified identification
-The verified identification method identifies users with a unique identifier and verifies their identity with the DevRev backend.
+The verified identification method is used to identify users with an identifier unique to your system within the DevRev platform. The verification is done through a token exchange process between you and the DevRev backend.
+
+The steps to identify a verified user are as follows:
+1. Generate an AAT for your system (preferably through your backend).
+2. Exchange your AAT for a session token for each user of your system.
+3. Pass the user identifier and the exchanged session token to the `DevRev.identifyVerifiedUser(userID, sessionToken, successCallback, errorCallback)` method.
+
+> [!CAUTION]
+> For security reasons we **strongly recommend** that the token exchange is executed on your backend to prevent exposing your application access token (AAT).
+
+##### Generate an AAT
+1. Open the DevRev web app at [https://app.devrev.ai](https://app.devrev.ai) and go to the **Settings** page.
+2. Open the **PLuG Tokens** page.
+3. Under the **Application access tokens** panel, click **New token** and copy the token that's displayed.
+
+> [!IMPORTANT]
+> Ensure that you copy the generated application access token, as you cannot view it again.
+
+##### Exchange your AAT for a session token
+In order to proceed with identifying the user, you need to exchange your AAT for a session token. This step will help you identify a user of your own system within the DevRev platform.
+
+Here is a simple example of an API request to the DevRev backend to exchange your AAT for a session token:
+> [!CAUTION]
+> Make sure that you replace the `<AAT>` and `<YOUR_USER_ID>` with the actual values.
+```bash
+curl \
+--location 'https://api.devrev.ai/auth-tokens.create' \
+--header 'accept: application/json, text/plain, */*' \
+--header 'content-type: application/json' \
+--header 'authorization: <AAT>' \
+--data '{
+  "rev_info": {
+    "user_ref": "<YOUR_USER_ID>"
+  }
+}'
+```
+
+The response of the API call will contain a session token that you can use with the verified identification method in your app.
+
+> [!NOTE]
+> As a good practice, **your** app should retrieve the exchanged session token from **your** backend at app launch or any relevant app lifecycle event.
+
+##### Identifying the verified user
+Pass the user identifier and the exchanged session token to the verified identification method:
 
 ```javascript
-DevRev.identifyVerifiedUser(identity, successCallback, errorCallback)
+DevRev.identifyVerifiedUser(userID, sessionToken, successCallback, errorCallback)
 ```
 
 #### Updating the user

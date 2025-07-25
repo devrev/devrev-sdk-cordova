@@ -24,6 +24,6 @@
     "platforms": []
   },
   "devDependencies": {
-    "@devrev/sdk-cordova": "^2.1.0"
+    "@devrev/sdk-cordova": "^2.1.1"
   }
 }
