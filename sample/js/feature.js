@@ -1,28 +1,43 @@
 // Feature list for different screens
 const featureData = {
-    "index.html": [
+    'index.html': [
         {
-            title: "Features",
+            title: 'Features',
             list: [
-                { text: "Identification", link: "identification.html" },
-                { text: "Push Notification", link: "pushNotifications.html" },
-                { text: "Support", link: "support.html" },
-                { text: "Session Analytics", link: "sessionAnalytics.html" }
+                { text: 'Identification', link: 'identification.html' },
+                { text: 'Push Notifications', link: 'pushNotifications.html' },
+                { text: 'Support', link: 'support.html' },
+                { text: 'Session Analytics', link: 'sessionAnalytics.html' }
             ]
         },
         {
-            title: "Debug",
+            title: 'Web View',
+            list: [
+                { text: 'Open Web View', link: 'webView.html' }
+            ]
+        },
+        {
+            title: 'Large Scrollable List',
+            list: [
+                { text: 'Open Large Scrollable List', link: 'largeScrollableList.html' }
+            ]
+        },
+        {
+            title: 'Debug',
             list: [
                 {
-                    text: "Simulate crash",
-                    action: () =>  DevRev.crash()
+                    text: 'Simulate crash',
+                    action: () => {
+                        throw new Error('Simulated crash');
+                    }
                 },
                 {
-                    text: "Simulate ANR",
+                    text: 'Simulate ANR',
                     action: () => {
                         if (cordova.platformId === 'android') {
                             const startTime = Date.now();
                             while (Date.now() - startTime < 5000) {
+                                void 0;
                             }
                         }
                     },
@@ -31,10 +46,10 @@ const featureData = {
             ]
         },
         {
-            title: "Animation",
+            title: 'Animation',
             list: [
                 {
-                    text: "Animation",
+                    text: 'Animation',
                     action: () => {
                         const elements = document.querySelectorAll('a');
                         const animationElement = Array.from(elements).find(el => el.textContent === 'Animation');
@@ -53,18 +68,18 @@ const featureData = {
             condition: () => cordova.platformId === 'android'
         }
     ],
-    "identification.html": [
+    'identification.html': [
         {
-            title: "Unverified User",
+            title: 'Unverified User',
             list: [
                 {
-                    text: "Identify User",
-                    type: "input-group",
+                    text: 'Identify User',
+                    type: 'input-group',
                     inputs: [
                         {
-                            id: "unverifiedUserId",
-                            type: "text",
-                            placeholder: "User ID"
+                            id: 'unverifiedUserId',
+                            type: 'text',
+                            placeholder: 'User ID'
                         }
                     ],
                     action: () => {
@@ -81,21 +96,21 @@ const featureData = {
             ]
         },
         {
-            title: "Verified User",
+            title: 'Verified User',
             list: [
                 {
-                    text: "Verify User",
-                    type: "input-group",
+                    text: 'Verify User',
+                    type: 'input-group',
                     inputs: [
                         {
-                            id: "verifiedUserId",
-                            type: "text",
-                            placeholder: "User ID"
+                            id: 'verifiedUserId',
+                            type: 'text',
+                            placeholder: 'User ID'
                         },
                         {
-                            id: "sessionToken",
-                            type: "text",
-                            placeholder: "Session Token"
+                            id: 'sessionToken',
+                            type: 'text',
+                            placeholder: 'Session Token'
                         }
                     ],
                     action: () => {
@@ -110,16 +125,16 @@ const featureData = {
             ]
         },
         {
-            title: "Update User",
+            title: 'Update User',
             list: [
                 {
-                    text: "Update User",
-                    type: "input-group",
+                    text: 'Update User',
+                    type: 'input-group',
                     inputs: [
                         {
-                            id: "email",
-                            type: "email",
-                            placeholder: "New Email"
+                            id: 'email',
+                            type: 'email',
+                            placeholder: 'New Email'
                         }
                     ],
                     action: () => {
@@ -143,129 +158,141 @@ const featureData = {
             ]
         },
         {
-            title: "Logout",
+            title: 'Logout',
             list: [
-                { text: "Logout", action: () => logout() }
+                { text: 'Logout', action: () => logout() }
             ]
         }
     ],
-    "pushNotifications.html": [
-        { title: "Push Notifications",
+    'pushNotifications.html': [
+        { title: 'Push Notifications',
             list: [
-                { text: "Register for Push Notifications", action: () => registerDevice() },
-                { text: "Unregister from Push Notifications", action: () => unregisterDevice() }
+                { text: 'Register for Push Notifications', action: () => registerDevice() },
+                { text: 'Unregister from Push Notifications', action: () => unregisterDevice() }
             ]
         }
     ],
-    "support.html": [
-        { title: "Support",
+    'support.html': [
+        { title: 'Support',
             list: [
-                { text: "Support Chat", action: () => DevRev.createSupportConversation() },
-                { text: "Support View", action: () => DevRev.showSupport() }
+                { text: 'Support Chat', action: () => DevRev.createSupportConversation() },
+                { text: 'Support View', action: () => DevRev.showSupport() }
             ]
         }
     ],
 
-    "sessionAnalytics.html": [
-        { title: "Session Monitoring",
+    'sessionAnalytics.html': [
+        { title: 'Session Monitoring',
             list: [
-                { text: "Stop Monitoring", action: () => {
+                { text: 'Stop Monitoring', action: () => {
                     DevRev.stopAllMonitoring(
-                        () => alert("Monitoring stopped successfully"),
-                        (error) => alert("Failed to stop monitoring: " + error)
+                        () => alert('Monitoring stopped successfully'),
+                        (error) => alert('Failed to stop monitoring: ' + error)
                     );
                 }},
-                { text: "Resume Monitoring", action: () => {
+                { text: 'Resume Monitoring', action: () => {
                     DevRev.resumeAllMonitoring(
-                        () => alert("Monitoring resumed successfully"),
-                        (error) => alert("Failed to resume monitoring: " + error)
+                        () => alert('Monitoring resumed successfully'),
+                        (error) => alert('Failed to resume monitoring: ' + error)
                     );
                 }}
             ]
         },
         {
-            title: "Session Recording",
+            title: 'Session Recording',
             list: [
-                { text: "Start Recording", action: () => {
+                { text: 'Start Recording', action: () => {
                     DevRev.startRecording(
-                        () => alert("Recording started successfully"),
-                        (error) => alert("Failed to start recording: " + error)
+                        () => alert('Recording started successfully'),
+                        (error) => alert('Failed to start recording: ' + error)
                     );
                 }},
-                { text: "Stop Recording", action: () => {
+                { text: 'Stop Recording', action: () => {
                     DevRev.stopRecording(
-                        () => alert("Recording stopped successfully"),
-                        (error) => alert("Failed to stop recording: " + error)
+                        () => alert('Recording stopped successfully'),
+                        (error) => alert('Failed to stop recording: ' + error)
                     );
                 }},
-                { text: "Pause Recording", action: () => {
+                { text: 'Pause Recording', action: () => {
                     DevRev.pauseRecording(
-                        () => alert("Recording paused successfully"),
-                        (error) => alert("Failed to pause recording: " + error)
+                        () => alert('Recording paused successfully'),
+                        (error) => alert('Failed to pause recording: ' + error)
                     );
                 }},
-                { text: "Resume Recording", action: () => {
+                { text: 'Resume Recording', action: () => {
                     DevRev.resumeRecording(
-                        () => alert("Recording resumed successfully"),
-                        (error) => alert("Failed to resume recording: " + error)
-                    );
-                }}
-            ]
-        },
-        {
-            title: "Timer",
-            list: [
-                { text: "Start Timer", action: () => {
-                    let properties = {"id": "foo-bar-123"};
-                    DevRev.startTimerWithProperties("Sample Timer", properties,
-                        () => alert("Timer started successfully"),
-                        (error) => alert("Failed to start timer with properties: " + error)
+                        () => alert('Recording resumed successfully'),
+                        (error) => alert('Failed to resume recording: ' + error)
                     );
                 }},
-                { text: "End Timer", action: () => {
-                    let properties = {"id": "foo-bar-123"};
-                    DevRev.endTimerWithProperties("Sample Timer", properties,
-                        () => alert("Timer ended successfully"),
-                        (error) => alert("Failed to end timer with properties: " + error)
+                { text: 'Pause User Interaction Tracking', action: () => {
+                    DevRev.pauseUserInteractionTracking(
+                        () => alert('User interaction tracking paused'),
+                        (error) => alert('Failed to pause user interaction tracking: ' + error)
+                    );
+                }},
+                { text: 'Resume User Interaction Tracking', action: () => {
+                    DevRev.resumeUserInteractionTracking(
+                        () => alert('User interaction tracking has resumed'),
+                        (error) => alert('Failed to resume user interaction tracking: ' + error)
                     );
                 }}
             ]
         },
         {
-            title: "Manual Masking / Unmasking",
+            title: 'Timer',
+            list: [
+                { text: 'Start Timer', action: () => {
+                    let properties = {'id': 'foo-bar-123'};
+                    DevRev.startTimerWithProperties('Sample Timer', properties,
+                        () => alert('Timer started successfully'),
+                        (error) => alert('Failed to start timer with properties: ' + error)
+                    );
+                }},
+                { text: 'End Timer', action: () => {
+                    let properties = {'id': 'foo-bar-123'};
+                    DevRev.endTimerWithProperties('Sample Timer', properties,
+                        () => alert('Timer ended successfully'),
+                        (error) => alert('Failed to end timer with properties: ' + error)
+                    );
+                }}
+            ]
+        },
+        {
+            title: 'Manual Masking / Unmasking',
             list: [
                 {
-                    text: "Manually Masked UI Item",
-                    type: "label",
-                    className: "devrev-mask"
+                    text: 'Manually Masked UI Item',
+                    type: 'label',
+                    className: 'devrev-mask'
                 },
                 {
-                    text: "Manually Unmasked UI Item",
-                    type: "input",
-                    className: "devrev-unmask",
-                    placeholder: "Manually Unmasked UI Item"
+                    text: 'Manually Unmasked UI Item',
+                    type: 'input',
+                    className: 'devrev-unmask',
+                    placeholder: 'Manually Unmasked UI Item'
                 }
             ]
         },
         {
-            title: "On-Demand Session",
+            title: 'On-Demand Session',
             list: [
                 {
-                    text: "Process On-Demand Session",
+                    text: 'Process On-Demand Session',
                     action: () => {
                         DevRev.processAllOnDemandSessions(
-                            () => alert("On-demand sessions processed successfully"),
-                            (error) => alert("Failed to process on-demand sessions: " + error)
+                            () => alert('On-demand sessions processed successfully'),
+                            (error) => alert('Failed to process on-demand sessions: ' + error)
                         );
                     }
                 }
             ]
         },
         {
-            title: "Delayed Screen",
+            title: 'Delayed Screen',
             list: [
                 {
-                    text: "Navigate to the Delayed Screen",
+                    text: 'Navigate to the Delayed Screen',
                     action: () => {
                         if (cordova.platformId === 'android') {
                             DevRev.setInScreenTransitioning(true);
@@ -286,16 +313,12 @@ let currentUserId = null;
 function logout() {
     if(device.uuid) {
         DevRev.logout(device.uuid,
-            () => alert("Logged out successfully"),
-            (error) => alert("Failed to logout: " + error)
+            () => alert('Logged out successfully'),
+            (error) => alert('Failed to logout: ' + error)
         );
     } else {
-        alert("Device UUID not found");
+        alert('Device UUID not found');
     }
-}
-
-function forceCrash() {
-    forceCrash();
 }
 
 async function registerDevice() {
@@ -312,7 +335,7 @@ async function registerDevice() {
             return;
         }
 
-        console.log("Got device token:", token);
+        console.log('Got device token:', token);
         DevRev.registerDeviceToken(token, window.device.uuid,
             () => alert('Device registered successfully for push notifications'),
             (error) => alert('Failed to register device: ' + error)
@@ -337,27 +360,27 @@ async function unregisterDevice() {
 }
 
 function renderFeatureList() {
-    const list = document.getElementById("featureList");
+    const list = document.getElementById('featureList');
     if (!list) return;
 
-    const screen = window.location.pathname.split("/").pop();
+    const screen = window.location.pathname.split('/').pop();
     const featureList = featureData[screen] || [];
 
-    list.innerHTML = "";
+    list.innerHTML = '';
 
     featureList.forEach(section => {
         if(section.condition && !section.condition()) {
-            return
+            return;
         }
         if (section.title) {
-            const header = document.createElement("h3");
+            const header = document.createElement('h3');
             header.textContent = section.title;
             list.appendChild(header);
         }
 
         if (section.list) {
-            const ul = document.createElement("ul");
-            ul.className = section.title === "Manual Masking / Unmasking" ? "input-group" : "feature-list";
+            const ul = document.createElement('ul');
+            ul.className = section.title === 'Manual Masking / Unmasking' ? 'input-group' : 'feature-list';
 
             section.list.forEach(item => {
                 // Skip items that don't meet their condition
@@ -365,14 +388,14 @@ function renderFeatureList() {
                     return;
                 }
 
-                if (item.type === "input-group") {
+                if (item.type === 'input-group') {
                     // Create input group container
-                    const inputGroup = document.createElement("div");
-                    inputGroup.className = "input-group";
+                    const inputGroup = document.createElement('div');
+                    inputGroup.className = 'input-group';
 
                     // Add inputs
                     item.inputs.forEach(input => {
-                        const inputElement = document.createElement("input");
+                        const inputElement = document.createElement('input');
                         inputElement.type = input.type;
                         inputElement.id = input.id;
                         inputElement.placeholder = input.placeholder;
@@ -382,63 +405,63 @@ function renderFeatureList() {
                     list.appendChild(inputGroup);
 
                     // Create button list item
-                    const li = document.createElement("li");
-                    li.style.cursor = "pointer";
+                    const li = document.createElement('li');
+                    li.style.cursor = 'pointer';
 
                     if (item.action) {
-                        li.addEventListener("click", (e) => {
+                        li.addEventListener('click', (e) => {
                             e.preventDefault();
                             item.action();
                             console.log(`"${item.text}" executed successfully.`);
                         });
                     }
 
-                    const a = document.createElement("a");
+                    const a = document.createElement('a');
                     a.textContent = item.text;
-                    a.href = "#";
-                    a.style.pointerEvents = "none";
-                    a.style.textDecoration = "none";
-                    a.style.color = "inherit";
+                    a.href = '#';
+                    a.style.pointerEvents = 'none';
+                    a.style.textDecoration = 'none';
+                    a.style.color = 'inherit';
 
                     li.appendChild(a);
                     ul.appendChild(li);
-                } else if (item.type === "input") {
-                    const li = document.createElement("li");
-                    const input = document.createElement("input");
-                    input.type = "text";
+                } else if (item.type === 'input') {
+                    const li = document.createElement('li');
+                    const input = document.createElement('input');
+                    input.type = 'text';
                     input.placeholder = item.placeholder;
                     input.className = item.className;
                     li.appendChild(input);
                     ul.appendChild(li);
-                } else if (item.type === "label") {
-                    const li = document.createElement("li");
-                    const label = document.createElement("label");
+                } else if (item.type === 'label') {
+                    const li = document.createElement('li');
+                    const label = document.createElement('label');
                     label.textContent = item.text;
                     label.className = item.className;
                     li.appendChild(label);
                     ul.appendChild(li);
                 } else {
-                    const li = document.createElement("li");
-                    li.style.cursor = "pointer";
+                    const li = document.createElement('li');
+                    li.style.cursor = 'pointer';
 
                     if (item.link) {
-                        li.addEventListener("click", () => {
+                        li.addEventListener('click', () => {
                             window.location.href = item.link;
                         });
                     } else if (item.action) {
-                        li.addEventListener("click", (e) => {
+                        li.addEventListener('click', (e) => {
                             e.preventDefault();
                             item.action();
                             console.log(`"${item.text}" executed successfully.`);
                         });
                     }
 
-                    const a = document.createElement("a");
+                    const a = document.createElement('a');
                     a.textContent = item.text;
-                    a.href = item.link || "#";
-                    a.style.pointerEvents = "none";
-                    a.style.textDecoration = "none";
-                    a.style.color = "inherit";
+                    a.href = item.link || '#';
+                    a.style.pointerEvents = 'none';
+                    a.style.textDecoration = 'none';
+                    a.style.color = 'inherit';
 
                     li.appendChild(a);
                     ul.appendChild(li);
@@ -449,22 +472,22 @@ function renderFeatureList() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
     renderFeatureList();
 
-    const currentPage = window.location.pathname.split("/").pop();
-    if (currentPage === "sessionAnalytics.html") {
+    const currentPage = window.location.pathname.split('/').pop();
+    if (currentPage === 'sessionAnalytics.html') {
         const properties = {
-            "page": "session_analytics",
-            "timestamp": new Date().toISOString()
+            'page': 'session_analytics',
+            'timestamp': new Date().toISOString()
         };
         DevRev.addSessionProperties(properties,
-            () => console.log("Session properties added successfully"),
-            (error) => console.error("Failed to add session properties:", error)
+            () => console.log('Session properties added successfully'),
+            (error) => console.error('Failed to add session properties:', error)
         );
-        DevRev.trackScreenName("session-analytics",
-            () => console.log("Screen name tracked successfully"),
-            (error) => console.error("Failed to track screen name:", error)
+        DevRev.trackScreenName('session-analytics',
+            () => console.log('Screen name tracked successfully'),
+            (error) => console.error('Failed to track screen name:', error)
         );
     }
 });

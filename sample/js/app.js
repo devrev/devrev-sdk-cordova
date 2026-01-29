@@ -1,7 +1,7 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const backButton = document.getElementById("backButton");
+document.addEventListener('DOMContentLoaded', function() {
+    const backButton = document.getElementById('backButton');
     if (backButton) {
-        backButton.addEventListener("click", function () {
+        backButton.addEventListener('click', function() {
             window.history.back();
         });
     }
@@ -26,13 +26,11 @@ document.addEventListener('deviceready', function() {
     cordova.plugins.firebase.messaging.requestPermission();
 
     cordova.plugins.firebase.messaging.getToken().then(function(token) {
-        console.log("Got device token: ", token);
+        console.log('Got device token: ', token);
     });
     cordova.plugins.firebase.messaging.onTokenRefresh(function(refreshedToken) {
-        console.log("Refreshed FCM token:", refreshedToken);
+        console.log('Refreshed FCM token:', refreshedToken);
     });
 
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-
-
 }, false);
