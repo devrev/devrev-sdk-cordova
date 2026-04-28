@@ -1,3 +1,5 @@
+/* global takePicture, selectFromGallery */
+
 // Feature list for different screens
 const featureData = {
     'index.html': [
@@ -180,7 +182,13 @@ const featureData = {
             ]
         }
     ],
-
+    'gallery.html': [
+        { title: 'Gallery',
+            list: [
+                { text: 'Pick from Gallery', action: () => selectFromGallery() }
+            ]
+        }
+    ],
     'sessionAnalytics.html': [
         { title: 'Session Monitoring',
             list: [
@@ -256,6 +264,13 @@ const featureData = {
                         (error) => alert('Failed to end timer with properties: ' + error)
                     );
                 }}
+            ]
+        },
+        {
+            title: 'Gallery',
+            list: [
+                { text: 'Camera', action: () => takePicture() },
+                { text: 'Gallery', link: 'gallery.html' }
             ]
         },
         {
