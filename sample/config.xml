@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="ai.devrev.sdk.bridge.cordova.sample" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>DevRevSDK (Cordova)</name>
+    <description>DevRev SDK for Cordova sample app.</description>
+    <author email="support@devrev.ai" href="https://devrev.ai">
+        DevRev
+    </author>
+    <content src="index.html" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-navigation href="*" />
+    <platform name="ios">
+        <resource-file src="GoogleService-Info.plist" />
+        <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
+            <string>This app needs camera access to take photos for testing session replay</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSPhotoLibraryUsageDescription">
+            <string>This app needs photo library access to select images for testing session replay</string>
+        </config-file>
+    </platform>
+
+    <platform name="android">
+        <resource-file src="google-services.json" target="app/google-services.json" />
+    </platform>
+</widget>
