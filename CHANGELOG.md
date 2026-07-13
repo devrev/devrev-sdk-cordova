@@ -78,3 +78,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Introduced the Session Analytics feature. This feature allows you to monitor the health of your application and its components.
 - Added support for Push Notifications for the PLuG support chat.
 - Added support to create new conversations in the PLuG support chat.
+
