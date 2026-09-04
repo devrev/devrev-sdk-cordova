@@ -1,7 +1,7 @@
 {
   "name": "ai.devrev.sdk.bridge.cordova.sample",
   "displayName": "DevRevSDK (Cordova)",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "DevRev SDK for Cordova sample app.",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "platforms": []
   },
   "devDependencies": {
-    "@devrev/sdk-cordova": "2.3.0",
+    "@devrev/sdk-cordova": "2.3.1",
     "cordova-plugin-device": "^3.0.0",
     "cordova-plugin-firebase-messaging": "^8.0.1",
     "cordova-support-android-plugin": "~2.0.4"
