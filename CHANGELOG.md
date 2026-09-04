@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2] - 2026-09-04
+
+### Added
+- Optional prefilled message support when creating support conversations.
+- SDK version filter for session replay from the dashboard.
+- Added support for UI-based rate limiting.
+
+### Changed
+- Improved session recording stability and reduced startup jank.
+
+### Fixed
+- Fixed crashes and ANRs related to session recording and WebView masking.
+- [iOS] Fixed support chat clearing on transient modal dismiss and landscape replay issues.
+
+## [2.3.1] - 2026-06-03
+
+### Fixed
+- Fixed session recordings associating events with the wrong DevRev workspace.
+- [iOS] Fixed crashes from thread-unsafe access.
+- [Android] Fixed masking issues on rapid scrolls.
+- [Android] Fixed an issue with missing crash types.
+
 ## [2.3.0] - 2026-04-28
 
 ### Changed
