@@ -367,6 +367,12 @@ You can initiate a new support conversation directly from your app. This method 
 DevRev.createSupportConversation(successCallback, errorCallback)
 ```
 
+You can optionally pass a plain-text message to pre-fill the conversation input field:
+
+```javascript
+DevRev.createSupportConversation('I need help with billing for order #12345', successCallback, errorCallback)
+```
+
 ### In-app link handling
 
 The DevRev SDK provides a mechanism to handle links opened from within any screen that is part of the DevRev SDK.
@@ -627,10 +633,25 @@ DevRev.processPushNotification(messageJson, function() {
 
 ##### iOS
 
-On iOS devices, you must pass the received push notification payload to the DevRev SDK for processing. The SDK handles the notification and executes the necessary actions.
+On iOS devices, you must update the `AppDelegate` to intercept notification clicks and forward the payload to the SDK.
 
-```javascript
-DevRev.processPushNotification(payload, successCallback, errorCallback)
+In `didFinishLaunchingWithOptions`, set the `UNUserNotificationCenter` delegate:
+
+```swift
+UNUserNotificationCenter.current().delegate = self
+```
+
+Implement `userNotificationCenter(_:didReceive:)` to pass the notification payload to the SDK:
+
+```swift
+func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    didReceive response: UNNotificationResponse
+) async {
+    await DevRev.processPushNotification(
+        response.notification.request.content.userInfo
+    )
+}
 ```
 
 For example:
