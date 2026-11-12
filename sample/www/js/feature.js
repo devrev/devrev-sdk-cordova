@@ -178,6 +178,7 @@ const featureData = {
         { title: 'Support',
             list: [
                 { text: 'Support Chat', action: () => DevRev.createSupportConversation() },
+                { text: 'Support Chat with Prefill', action: () => DevRev.createSupportConversation('Hi, I need help with my account') },
                 { text: 'Support View', action: () => DevRev.showSupport() }
             ]
         }
@@ -286,6 +287,60 @@ const featureData = {
                     type: 'input',
                     className: 'devrev-unmask',
                     placeholder: 'Manually Unmasked UI Item'
+                }
+            ]
+        },
+        {
+            title: 'Feature Configuration',
+            list: [
+                {
+                    text: 'Enable Frame Capture',
+                    action: () => {
+                        DevRev.updateFeatureConfiguration(
+                            {
+                                enableFrameCapture: true,
+                                autoStartRecording: true,
+                                prefersDialogMode: false,
+                                alwaysUseRemoteConfig: true,
+                                supportWidgetTheme: { prefersSystemTheme: true }
+                            },
+                            () => alert('Frame capture enabled'),
+                            (error) => alert('Failed to update feature configuration: ' + error)
+                        );
+                    }
+                },
+                {
+                    text: 'Disable Frame Capture',
+                    action: () => {
+                        DevRev.updateFeatureConfiguration(
+                            {
+                                enableFrameCapture: false,
+                                autoStartRecording: true,
+                                prefersDialogMode: false,
+                                alwaysUseRemoteConfig: true,
+                                supportWidgetTheme: { prefersSystemTheme: true }
+                            },
+                            () => alert('Frame capture disabled'),
+                            (error) => alert('Failed to update feature configuration: ' + error)
+                        );
+                    }
+                }
+            ]
+        },
+        {
+            title: 'Error Capture',
+            list: [
+                {
+                    text: 'Capture Error',
+                    action: () => {
+                        const error = new Error('Simulated handled error for testing');
+                        DevRev.captureError(
+                            error,
+                            'test-error',
+                            () => alert('Error captured successfully'),
+                            (err) => alert('Failed to capture error: ' + err)
+                        );
+                    }
                 }
             ]
         },
